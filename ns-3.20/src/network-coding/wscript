@@ -1,0 +1,60 @@
+## -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
+def configure(conf): 
+    #conf.env.append_value('LINKFLAGS', ["-L/usr/lib/x86_64-linux-gnu/libm4rie","-lm4rie"])
+    #conf.env.append_value('CXXFLAGS', '-zmuldefs')
+
+    #have_itpp = conf.pkg_check_modules('IT++', 'itpp', mandatory=True)
+    have_itpp = conf.check_cfg(package='itpp', args=['--cflags', '--libs'],
+                              uselib_store='IT++', mandatory=True)
+    conf.env['ENABLE_ITPP'] = have_itpp
+    conf.report_optional_feature("IT++", "IT++ library",
+                                 conf.env['ENABLE_ITPP'],
+                                 "IT++ not found")
+    if conf.env['ENABLE_ITPP']:
+        conf.env.append_value('CXXFLAGS', '-DNO_INT_SIZE_CHECK')
+
+    have_m4ri = conf.check_cfg(package='m4ri', args=['--cflags', '--libs'],
+   	                          uselib_store='M4RI', mandatory=True)
+    conf.env['ENABLE_M4RI'] = have_m4ri
+    conf.report_optional_feature("M4RI", "m4ri library",
+                                 conf.env['ENABLE_M4RI'],
+                                 "M4RI not found")
+
+def build(bld):
+    obj = bld.create_ns3_module('network-coding', ['core','wifi','network','internet','propagation'])
+    obj.source = [
+        'model/network-coding-l4-protocol.cc',
+        'model/intra-flow-network-coding-protocol.cc',     
+        'model/intra-flow-network-coding-header.cc', 
+        'helper/network-coding-helper.cc'          
+        ] 
+
+    obj.env.append_value("CXXFLAGS", "-I/usr/include")
+    obj.env.append_value("LINKFLAGS", ["-lm4ri","-lm4rie","-L/usr/lib/x86_64-linux-gnu/"])
+    obj.env.append_value("LIB", ["m4ri","m4rie"])
+
+    obj_test = bld.create_ns3_module_test_library('network-coding')
+    obj_test.source = [
+        'test/network-coding-test-suite.cc',
+        ]    
+
+    headers = bld(features='ns3header')   
+    headers.module = 'network-coding'
+    headers.source = [
+        'model/network-coding-l4-protocol.h',
+        'model/intra-flow-network-coding-protocol.h',     
+        'model/intra-flow-network-coding-header.h',
+        'helper/network-coding-helper.h'          
+        ]
+
+    if bld.env['ENABLE_ITPP']:
+        obj.uselib = 'IT++'
+        obj.env.append_value('CXXDEFINES', "ENABLE_ITPP")
+
+
+
+    #if bld.env['ENABLE_GSL']:
+          #obj.use.extend(['GSL', 'GSLCBLAS', 'M'])
+          #obj_test.use.extend(['GSL', 'GSLCBLAS', 'M'])
+       
+  #  bld.ns3_python_bindings()

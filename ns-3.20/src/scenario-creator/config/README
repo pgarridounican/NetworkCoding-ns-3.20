@@ -1,0 +1,83 @@
+Points to take into account to create a configuration file.
+   - The file MUST have the extension ".config" to be correctly parsed by the simulator.
+   - The content is split into three realms: the first one sets the main parameters that configure the simulation (i.e. number of packets and its length, number of simulations), the second one is related 
+     the stack definition (i.e. transport layer, channel model) and, finally, the last one selects the system output, such as if there will be any kind of tracing enabled (proprietary, PCAP or ASCII) or if 
+     we want to verbose the information related to the WiFi level.
+
+For the sake of a better and faster use of this model, in the following points we will describe the particularities a potential user should take into account in order to correctly define a scenario:
+  [SCENARIO]
+    -RUN=5	     	  					--> Number of simulations to be carried out
+    -RUN_OFFSET=0	  					--> There will be concrete moments when we want to start a simulation campaign and don't want to start with the first one (i.e. unexpected failure). With this value, the first simulation will hold the value, and continue from this one
+    -NUM_PACKETS=1000	   					--> Number of packets that will be sent from the source nodes (for each one), that is to say, the application layer for each node will receive this value.
+    -PACKET_LENGTH=1460	   					--> Packet length (at application layer). 
+    -SCENARIO_DESCRIPTION=two-nodes-scenario.conf		--> Scenario description file
+    -CHANNEL_CONFIGURATION=two-nodes-channel.conf		--> Channel description file
+    -STATIC_ROUTING_TABLE=x-static-routing.conf 		--> Static routing table file
+
+  [STACK]
+    -TRANSPORT_PROTOCOL=TCP/UDP    
+
+  [NETWORK_CODING]                                      --> Intra-flow NC configuration
+    -ENABLED=0/1					--> Enable/disable the NC layer (disabled by default)
+    -BUFFER_TIMEOUT=40					--> Sojourn time (in milliseconds) of a packet in the NC buffering environment
+    -q=1						--> Galois Field (GF(2^q))
+    -K=64						--> Block Size
+    -RECODING=1						--> Enable/Disable recoding at the intermediate nodes
+    -OVERHEARING=1					--> Enable/Disable overhearing the packets by nodes. All the nodes participate in the forwarding process.
+    -SYSTEMATIC=1					--> Enable/Disable systematic transmission by the source. The source transmits the K first packets without codified
+    -STARTRECODING=1					--> After this number of packets the intermediate node start to send recode packets instead of just forwarding them
+
+  [WIFI]  
+    -TX_NUMBER=1					--> Number of IEEE 802.11 frame transmission attempts
+    -DATA_RATE=DsssRate11Mbps				--> Data rate transmission
+    -CONTROL_RATE=DsssRate11Mbps			--> Control rate transmission		
+
+  [OUTPUT]
+    -APPLICATION_LEVEL_SHORT_TRACING=0  --> Proprietary tracing (Short format) - OnOffApplication + PacketSink
+    -NETWORK_CODING_SHORT_TRACING = 0	--> Proprietary tracing (Network Coding Layer: Summarized format ... 1 line per simulation run)
+    -PHY_WIFI_SHORT_TRACING=0		--> Proprietary tracing (Physical Layer - YansWifiPhy, short format)
+    -ROUTING_TABLES=0			--> Decide if print (or not) the routing tables, inherent to the corresponding routing protocols
+
+
+
+------------SCENARIO_DESCRIPTION-----------
+
+#No.	X	Y	Z	TX	RX	
+1	0	0	0	3	0
+2	5	5	0	0	0
+3	10	10	0	0	1
+
+#No. -> Node identifier
+X    -> X position 
+Y    -> Y position
+Z    -> Z position
+TX   -> Identified of the destination node
+RX   -> 0(Not Source)/ 1(Source)
+
+
+------------STATIC_ROUTING_TABLE-----------
+
+#Node ID	Destination	Nexthop		Interface	Metric
+0		1		1		1		0
+0		2		1		1		0
+1		0		0		1		0
+1		2		2		1		0
+2		0		1		1		0
+2		2		1		1		0
+	
+
+#Node ID    -> Node to configure
+Destination -> Destination
+NextHop     -> Next Hop
+Interface   -> Interface (usually 1)
+Metric      -> Metric (usually 0)
+
+
+------------CHANNEL_CONFIGURATION-----------
+100 030 100	--> Node 1,1->FER=100/100=1; Node 1,2->FER=030/100=0.3; Node 1,3->FER=100/100=1
+030 100 030
+100 030 100
+
+
+
+
