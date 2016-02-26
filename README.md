@@ -39,11 +39,11 @@ NEW PROPRIETARY CODE
 We have already provided many valoid results that have been included into various publications [2],[3],[4],[5]. 
 
 ## References ##
-[1] [Chachulski, S., Jennings, M., Katti, S., & Katabi, D. (2007). Trading structure for randomness in wireless opportunistic routing (Vol. 37, No. 4, pp. 169-180). ACM.]
-[2] [Gómez, D., Rodríguez, E., Agüero, R., & Muñoz, L. (2014, May). Reliable communications over wireless mesh networks with inter and intra-flow network coding. In Proceedings of the 2014 Workshop on ns-3 (p. 4). ACM.]
-[3] [Gomez, D., Rodriguez, E., Aguero, R., & Munoz, L. (2014, June). Reliable communications over lossy wireless channels by means of the combination of UDP and Random Linear Coding. In Computers and Communication (ISCC), 2014 IEEE Symposium on (pp. 1-6). IEEE.]
-[4] [Gomez, D., Garrido, P., Rodriguez, E., Aguero, R., & Munoz, L. (2014, November). Enhanced opportunistic random linear source/network coding with cross-layer techniques over wireless mesh networks. In Wireless Days (WD), 2014 IFIP (pp. 1-4). IEEE.]
-[5] [Garrido Ortiz, P., Gomez, D., Aguero, R., & Munoz, L. Performance of Random Linear Coding over Multiple Error-Prone Wireless Links.]
+* [1] [Chachulski, S., Jennings, M., Katti, S., & Katabi, D. (2007). Trading structure for randomness in wireless opportunistic   routing (Vol. 37, No. 4, pp. 169-180). ACM.]
+* [2] [Gómez, D., Rodríguez, E., Agüero, R., & Muñoz, L. (2014, May). Reliable communications over wireless mesh networks with inter and intra-flow network coding. In Proceedings of the 2014 Workshop on ns-3 (p. 4). ACM.]
+* [3] [Gomez, D., Rodriguez, E., Aguero, R., & Munoz, L. (2014, June). Reliable communications over lossy wireless channels by means of the combination of UDP and Random Linear Coding. In Computers and Communication (ISCC), 2014 IEEE Symposium on (pp. 1-6). IEEE.]
+* [4] [Gomez, D., Garrido, P., Rodriguez, E., Aguero, R., & Munoz, L. (2014, November). Enhanced opportunistic random linear source/network coding with cross-layer techniques over wireless mesh networks. In Wireless Days (WD), 2014 IFIP (pp. 1-4). IEEE.]
+* [5] [Garrido Ortiz, P., Gomez, D., Aguero, R., & Munoz, L. Performance of Random Linear Coding over Multiple Error-Prone Wireless Links.]
 
 
 ## Contacts ##
